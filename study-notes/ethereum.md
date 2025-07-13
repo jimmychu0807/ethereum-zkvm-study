@@ -1,0 +1,108 @@
+# Ethereum Protocol Team
+
+new structure
+  https://blog.ethereum.org/2025/06/02/announcing-protocol
+
+protocol:
+key priority: scale L1, scale blobs, improve UX
+
+ppl:
+Scale L1: Tim Beiko & Ansgar Dietrichs
+Scale L2: Alex Stokes & Francesco D’Amato
+Improve UX: Barnabé Monnot & Josh Rudolf
+
+website: https://protocol.ethereum.foundation/
+team: https://protocol.ethereum.foundation/teams
+
+Meeting and Project Management:
+https://github.com/ethereum/pm/issues
+
+## Protocol Research Call (PRC) 2
+- DA is important. It captures Defi fee
+
+# Ethereum - Beam Day Cannes
+
+## Beam Day Event Overview
+https://hackmd.io/@willcorcoran/BkZ-gs5Bll
+
+Beam Day playlist
+https://www.youtube.com/playlist?list=PLJqWcTqh_zKEwDCbJ31ds3VSIxa4rUxvF
+
+## Opening
+Justin Drake (EF)
+https://hackmd.io/@willcorcoran/S1IeXoqSgg
+
+the short term goal (2025 mid - 2026 mid)
+  - scaling L1
+  - scaling the blob (scaling L2)
+  - improving UX
+
+In the long-term
+  - make ethereum post-quantum
+
+## Post-quantum signautre for beam chain
+
+https://hackmd.io/@willcorcoran/SJAxOscree
+Dmitry Khovratovich (EF researcher)
+
+- Basically it will be poseidon hash based signature.
+- signature based on chaining and picking from the position that sum up to be a certain speciific number.
+
+## SNARKIFICATION: Beacon SNARKification (Boundless)
+https://www.youtube.com/watch?v=_9JM83Comv4
+Jacob Everly (Boundless)
+
+- CCTP stands for Circle's Cross-Chain Transfer Protocol. It is expensive. LayerZero is charging 500k for integration to bring liquidity on chain.
+- boundless is on interop - ZKasper
+- boundless market make it cheap to generate zkproof
+
+- Zkasper is thing that boundless is working on
+- proving for a block
+- RiscZero zkVM is reaching v3
+
+## SNARKIFICATION: Zig Client and zkVM Integration (Zeam & EF)
+
+https://hackmd.io/@willcorcoran/rkHcOo9Hex
+
+By Guillaume Ballet (GB) Zeam & EF - Geth
+
+- Geth to support multiple zkVM prover.
+- riskZero zkVM seems to be doing it properly, at least is getting the endorsement from Geth developer
+
+
+# EF Protocol Jul 4 - 11 Update
+progress update:
+  https://x.com/ladislaus0x/status/1943612099600466288
+
+Increase max transaction gas limit to 2^24 per tx, about 16.77M gas
+
+L1 zkEVM realtime proving:
+  https://blog.ethereum.org/2025/07/10/realtime-proving
+
+There is a ePBS and FOCIL compatibility discussion:
+  https://ethereum-magicians.org/t/epbs-focil-compatibility/24777
+  ePBS [EIP-7732](https://eips.ethereum.org/EIPS/eip-7732): Enshrined Proposer-Builder Separation
+  FOCIL [EIP-7805](https://eips.ethereum.org/EIPS/eip-7805): Fork-choice enforced inclusion list
+
+A nice UI: https://cperezz.github.io/bloatnet-website/index.html
+
+# Others
+
+- Reconfiguring on AllCoreDevs (ACD) organization and how Ethereum governance works
+  https://ethereum-magicians.org/t/reconfiguring-allcoredevs/23370
+
+- Ethereum Protocol Fellowship: https://epf.wiki/#/README
+
+# Todo
+
+How to participate in ethereum protocol dev?
+  - apply job:
+    - https://jobs.lever.co/ethereumfoundation/07366f81-c0a4-4ddb-ad66-b6c95fc217dc
+    - https://jobs.lever.co/ethereumfoundation/824e5aa6-cda4-438b-8901-125ab53cdacb
+
+  - running Eth validator (via rocketpool)
+  - running boundless validator
+
+  - followup ethereum protocol fellowship: Cohort 6
+  - study deeper in riscZero zkVM
+  - running boundless zkprover
