@@ -69,6 +69,34 @@ By Guillaume Ballet (GB) Zeam & EF - Geth
 - Geth to support multiple zkVM prover.
 - riskZero zkVM seems to be doing it properly, at least is getting the endorsement from Geth developer
 
+# EPF wiki study notes
+
+## Consensus layer - Core dev
+
+about protocol guild
+  - https://tim.mirror.xyz/srVdVopOFhD_ZoRDR50x8n5wmW3aRJIrNEAkpyQ4_ng
+  - https://www.youtube.com/watch?v=9Tc2g7pu-gc
+
+## Testing
+
+They are important and ensure different clients adhere to the same standard
+- Ethereum test: https://github.com/ethereum/tests (for previous version before the merge)
+- EL spec: https://github.com/ethereum/execution-specs
+  - EL test docs: https://eest.ethereum.org/main/running_tests/
+- Solidity test: https://github.com/ethereum/solidity
+- CL spec: https://github.com/ethereum/consensus-specs
+
+Cross-layer testing - e2e testing - execution & consensus layer
+  - hive: https://github.com/ethereum/hive
+    - simulator, setting a local test-net (2 nodes, CL+EL combined), and run test
+  - assertoor (ethpandaops)
+  - kurtosis (ethereum-package): spawning ethereum devnet
+
+eth1 - legacy name of execution layer
+eth2 - legacy name of consensus layer
+
+
+
 
 # EF Protocol Jul 4 - 11 Update
 progress update:
@@ -106,3 +134,22 @@ How to participate in ethereum protocol dev?
   - followup ethereum protocol fellowship: Cohort 6
   - study deeper in riscZero zkVM
   - running boundless zkprover
+
+# Info
+
+Client Diversity: https://clientdiversity.org/#distribution
+
+## Consensus Client
+Grandine, Rust, https://github.com/grandinetech/grandine
+Lighthouse, Rust, https://github.com/sigp/lighthouse/
+Loadstar, Typescript, https://github.com/ChainSafe/lodestar
+Prysm, golang, offchainlabs (company behind Arbitrum)
+Ream, Rust
+
+## Execution Client
+Besu, Java, Hyperledger
+Erigon, golang, Ledgerwatch
+Geth, golang, EF
+Nethermind, C# / .NET, Nethermind
+Reth, Rust, https://github.com/paradigmxyz/reth, Paradigm
+Ethereumjs, typescript, EF
