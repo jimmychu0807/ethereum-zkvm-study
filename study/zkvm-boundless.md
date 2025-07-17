@@ -14,3 +14,5 @@ The zkVM
 
 - Start from here: https://ethproofs.org/learn
   This shows different zkVM doing proofs for ethereum blocks
+
+- Succinct and Boundless are doing similar thing, having a prover network
