@@ -95,7 +95,74 @@ Cross-layer testing - e2e testing - execution & consensus layer
 eth1 - legacy name of execution layer
 eth2 - legacy name of consensus layer
 
+# Ethereum Execution Spec Tests
+- execution specs: https://github.com/ethereum/execution-specs
+- execution spec tests: https://github.com/ethereum/execution-spec-tests
 
+## Filling the tests
+https://eest.ethereum.org/main/filling_tests/
+
+Steps
+1. test cases (in python) -> test fixtures (aka filling the tests)
+2. Client (or test tools i.e. Hive) consumes JSON fixtures,
+
+There is also "execute" command directly take the test cases to the test client.
+
+The filling command, example
+
+`uv run fill tests/prague -k "bls12_g1add" -v -m state_test --clean`
+
+- `uv` - the python package manager, written in rust
+- `run` - the command
+- `-k` - filter by test case ID
+- `-v` - verbose
+- `-m` - type of test to run
+- `--clean` - clean up the fixture dir
+
+## Consume Direct
+https://eest.ethereum.org/main/running_tests/consume/direct/
+
+- only support el-geth and el-nethermind
+
+examaple:
+
+```sh
+# for geth
+uv run consume direct --input ./fixtures -m state_test --bin=evm
+
+# for nethermind
+uv run consume direct --input ./fixtures -m state_test --bin=nethtest
+```
+
+## Consume Engine & RLP
+
+- engine API: from consensus layer
+- RLP: run during sync'ing
+- Run both engine and RLP to add redundency
+
+
+consuming fixture using engine API. Comm between the consensus client.
+
+# Ethereum Consensus Spec Tests
+- consensus specs: https://github.com/ethereum/consensus-specs
+- consensus spec tests: https://github.com/ethereum/consensus-spec-tests
+
+... not sure how to run the spec and spec test yet.
+
+# Hive
+
+# Kurtosis
+
+- kurtosis is like a container orchestrator with config and instance for spawning containers.
+
+- you will then need the etheureum-package
+  https://github.com/ethpandaops/ethereum-package
+
+- ethpandas blog post:
+  https://ethpandaops.io/posts/kurtosis-deep-dive
+
+- full configuration list:
+  https://github.com/ethpandaops/ethereum-package?tab=readme-ov-file#configuration
 
 
 # EF Protocol Jul 4 - 11 Update
