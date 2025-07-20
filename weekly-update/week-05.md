@@ -2,8 +2,8 @@
 
 ## What I have done in the past week
 
-- Read through the epf wiki
-  - [The Protocol](https://epf.wiki/#/wiki/protocol/architecture)
+- Read through the [**EPF wiki**](https://epf.wiki/#/), including:
+  - The Protocol
   - Execution Layer
   - Consensus Layer
   - Development
