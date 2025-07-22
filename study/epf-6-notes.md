@@ -87,6 +87,13 @@ RUST_LOG=info <release-binary> --prove
 
 #### consens1us
 
+## Week 6
+- reamlabs study note: https://hackmd.io/@reamlabs
+- Jun Song study note: https://hackmd.io/@junsong
+
+- there is a simpleserialize website for serializing/deserializing ssz object
+  https://github.com/ChainSafe/ssz/tree/master/packages/simpleserialize.com
+
 # Info
 - start at June 16, 2025, count as wk 1
 - currently (Jul 14) in epf-6: week 4 / week 5

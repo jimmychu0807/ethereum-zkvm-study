@@ -95,7 +95,7 @@ Cross-layer testing - e2e testing - execution & consensus layer
 eth1 - legacy name of execution layer
 eth2 - legacy name of consensus layer
 
-# Ethereum Execution Spec Tests
+# Execution Spec Tests
 - execution specs: https://github.com/ethereum/execution-specs
 - execution spec tests: https://github.com/ethereum/execution-spec-tests
 
@@ -143,11 +143,28 @@ uv run consume direct --input ./fixtures -m state_test --bin=nethtest
 
 consuming fixture using engine API. Comm between the consensus client.
 
-# Ethereum Consensus Spec Tests
-- consensus specs: https://github.com/ethereum/consensus-specs
-- consensus spec tests: https://github.com/ethereum/consensus-spec-tests
+# Consensus Spec & Tests
 
-... not sure how to run the spec and spec test yet.
+- consensus specs: https://github.com/ethereum/consensus-specs
+- consensus spec-test artifacts: https://github.com/ethereum/consensus-spec-tests
+- consensus specs doc: https://ethereum.github.io/consensus-specs
+- vitalik's annotated spec: https://github.com/ethereum/annotated-spec
+
+## Running Consensus Spec Tests
+
+- doc on writing consensus test: https://github.com/ethereum/consensus-specs/blob/master/tests/README.md
+- The test framework used is [pytest (v0.8)](https://docs.pytest.org/en/8.0.x/)
+- The two core dirs:
+  - `/specs`
+  - `/tests/core/pyspec/eth2spec`
+
+- `make test` params
+  - **k**: the test case name
+  - **fork**: test on which blockchain fork
+  - **preset**: some preset configuration
+
+- Test format doc is listed at:
+  https://github.com/ethereum/consensus-specs/tree/master/tests/formats
 
 # Hive
 
