@@ -1,3 +1,18 @@
+# General
+
+- blog post on epf-6: https://blog.ethereum.org/2025/04/10/epf-6
+- start at June 16, 2025, count as wk 1
+- currently (Jul 14) in epf-6: week 4 / week 5
+- standup call: every Monday @2300 HKT, https://meet.ethereum.org/epf-standup
+- OH call: every Wed @2300 HKT, https://meet.ethereum.org/epf-office-hours
+- EF org chart: https://ethereum.foundation/assets/ef-org-chart.png
+- Mario & Joshua Davis: they are protocol team: Protocol & Application Support
+
+## ream
+
+https://github.com/ReamLabs/ream
+https://ream.rs/
+
 # Interested tasks
 
 ## Grandine: zkVMs for Beacon Chain Snarkification
@@ -18,27 +33,6 @@ We've started benchmarking SP1 and RISC Zero against ream's consensus codebase, 
 We are looking to extend our benchmarking setup to cover other zkVMs like OpenVM, Zisk, Jolt, Brevis Pico, Valida, etc. You'll be implementing benchmarks for these systems, modifying the ream codebase as needed to support the snarkification, while keeping the benchmark framework modular enough to keep track of differences across code iterations, and to easily convert for beam chain specs down the road.
 
 We hope this project provides essential data for making informed zkVM choices in Beam Chain development. For the fellow, it's a chance to get hands-on with both beacon chain consensus implementation details and the rapidly evolving zkVM ecosystem, and prepare yourself to snarkify the upcoming Beam Chain specs.
-
-- Lodestar: ERA file support
-  https://github.com/ChainSafe/lodestar/issues/7048
-
-- Teku / Nimbus / Grandine: Implement EIP-7917 - Deterministic proposer lookahead
-  [EIP-7917](https://eips.ethereum.org/EIPS/eip-7917) is a mechanism to pre-calculate and store a deterministic proposer lookahead in the beacon state at the start of every epoch. Implementing this EIP in one or more of the above mentioned clients is a low hanging-fruit as well as [super valuable](https://hackmd.io/@linoscope/eip-7917-from-preconf-protocol), and may serve as an excellent starting point for a fellow to get involved with core protocol work.
-
-  By Justin Drake & Lin Oshitani
-
-- Grandine: Exploring Distributed Validator Technology (DVT) Compatibility
-  By Saulius Grigaitis
-
-  Distributed Validator Technology (DVT) is gaining momentum within the Ethereum staking ecosystem. We propose to assess Grandine’s compatibility with major DVT solutions, evaluate integration challenges, and explore potential extensions to support secure, decentralized validator operations.
-
-- Grandine: ePBS (EIP-7732)
-  By Saulius Grigaitis
-
-  Grandine currently has no implementation of EIP-7732: Enshrined Proposer-Builder Separation (ePBS).
-
-- Ephemery testnet
-  By Mario Havel
 
 # Weekly Study
 
@@ -94,15 +88,13 @@ RUST_LOG=info <release-binary> --prove
 - there is a simpleserialize website for serializing/deserializing ssz object
   https://github.com/ChainSafe/ssz/tree/master/packages/simpleserialize.com
 
-# Info
-- start at June 16, 2025, count as wk 1
-- currently (Jul 14) in epf-6: week 4 / week 5
-- standup call: every Monday @2300 HKT, https://meet.ethereum.org/epf-standup
-- OH call: every Wed @2300 HKT, https://meet.ethereum.org/epf-office-hours
-- EF org chart: https://ethereum.foundation/assets/ef-org-chart.png
-- Mario & Joshua Davis: they are protocol team: Protocol & Application Support
+### grandine-zk
 
-## ream
+- build command: `cargo build --release -p zkvm_host --features risc0`
 
-https://github.com/ReamLabs/ream
-https://ream.rs/
+### other
+- when can the grandine-zk be open src?
+
+
+- openvm learning:
+  https://github.com/openvm-org/openvm/tree/main/examples
