@@ -1,4 +1,4 @@
-# Week 5 (Jul 21 - 27) Update
+# Week 6 (Jul 21 - 27) Update
 
 ## Quick Summary
 
