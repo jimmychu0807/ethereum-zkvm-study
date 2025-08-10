@@ -8,6 +8,6 @@ https://github.com/jimmychu0807/grandine-zk/pull/1
 3. Added host code of [`host/src/backend/pico.rs`](https://github.com/jimmychu0807/grandine-zk/pull/1/files#diff-940f069e4f5c73958e246678533e9a1bc81c972ef970f0eb16b33b49c27d62cb)
 4. Added guest code at [`guest/pico/*`](https://github.com/jimmychu0807/grandine-zk/pull/1/files#diff-b622fd118817f3bd6bf7b754cca00afa983d87cc40544a6d0cfd144fe7548529) - encountered an error that building the guest code with `cargo pico` would return a linker error (something about `ll`).
 
-Next week todo:
+## Next Week
 
 Continue to resolve #4, and then check that the host and guest code work together.
