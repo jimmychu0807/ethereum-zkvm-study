@@ -92,6 +92,11 @@ RUST_LOG=info <release-binary> --prove
 
 - build command: `cargo build --release -p zkvm_host --features risc0`
 
+## Week 7
+
+- `cargo build` the the grandine-zk repo will has error saying that the bls has redefined some kind of keys before.
+  - it only compiles when you are compiling specifically for the `zkvm_host`.
+
 ### other
 - when can the grandine-zk be open src?
 
