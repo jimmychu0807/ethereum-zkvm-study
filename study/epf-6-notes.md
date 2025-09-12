@@ -103,3 +103,9 @@ RUST_LOG=info <release-binary> --prove
 
 - openvm learning:
   https://github.com/openvm-org/openvm/tree/main/examples
+
+## Week 12 (Sep 1 - 7)
+
+`process_block()` spec:
+  https://ethereum.github.io/consensus-specs/specs/electra/beacon-chain/#block-processing
+
