@@ -54,7 +54,7 @@ The [zkvm guest code](https://github.com/grandinetech/grandine/pull/386/files#di
 
 Lastly I also added a github CI workflow script [`zkvm-test.yml`](https://github.com/grandinetech/grandine/pull/386/files#diff-3100b4a9081a2d21a9a64759e0d35e33684fac9cb222c56d8c00135f23beaed6) so there is a CI test to build different zkVM host and guest code and run two test cases. This serves as a sanity check to ensure that future code change doesn't break the zkVM host and guest code.
 
-The work is enclosed in [PR#386](https://github.com/grandinetech/grandine/pull/386).
+The work is comprised in [PR#386](https://github.com/grandinetech/grandine/pull/386).
 
 ### Accompanied PRs to SHA2 and BLS12-381
 
@@ -71,13 +71,59 @@ The BLS12-381 PR is particularly delicate as there are more than 50 places that 
 
 ### Benchmark Running
 
-NX> on running the benchmark in cpu and gpu cluster
+There were originally three test cases comprised in the zkvm extension framework. I requested the main team to add another empty block transition test that came from the [consensus-spec-test](https://github.com/ethereum/consensus-spec-tests/tree/master/tests/mainnet/electra/sanity/blocks/pyspec_tests/empty_block_transition) as a sanity check.
+
+There are now four test cases, ranked from the least computing-intensive to the most.
+
+1. An empty block transition test
+2. Pectra Devnet without epoch transition
+3. Pectra Devnet with epoch transition
+4. Mainnet without epoch transition
+
+I had a chance to run an informal benchmark on my macbook Air with M1 chip and 16GB RAM.
+
+In execute mode, for **r0vm**:
+
+|  | empty-block-transition | pectra-wo-epoch | pectra-w-epoch | mainnet-wo-epoch |
+| -------- | -------- | -------- |--|--|
+| time elapsed | 5.59s | 117.43s | 927.43s | 3066.35s |
+| execution cycles | 241,696,768 | 4,909,432,832 | 39,038,484,480 | 116,489,453,568 |
+
+In execute mode, for **pico**:
+
+|  | empty-block-transition | pectra-wo-epoch | pectra-w-epoch | mainnet-wo-epoch |
+| -------- | -------- | -------- |--|--|
+| time elapsed | 33.62s | 528.43s | 2592.21s | Panicked with max memory exceeded. [Read explanation](https://github.com/brevis-network/pico/issues/48#issuecomment-3286930946).|
+| execution cycles | 164,850,074 | 2,555,459,575 | 12,685,893,340 | n.a. |
+
+Now we are really interested to run the test cases with proof generated. Unfortunately it takes a huge amount of time. Even the simplest test case takes 3 hours onward to run and I have to terminate the test.
+
+At the end, I was able to get a hand on running test on RiscZero [Bonsai Network](tk), with GPU capability, thank to another protocol fellow [Subhasish](tk) passing his API key to me.
+
+This is the result.
+
+In prove mode, for **r0vm**
+
+|  | consensus-spec-test | pectra-wo-epoch | pectra-w-epoch | mainnet-wo-epoch |
+| -------- | -------- | -------- |--|--|
+| time elapsed | 58.12s | 469.90s | error out | error out |
+
+It errors out as it seems the computation has exceeded the account computing quota on Bonsai Network.
 
 ## Current Impact and Future of the project
 
-Potential next steps and improvements, use cases in the ecosystem
+<!-- Potential next steps and improvements, use cases in the ecosystem -->
+
+This is my part of Grandine zkVM integration with Brevis Pico. Other fellows are integrating Ziren (Ritesh) and Zisk (Aman) into Grandine using similar approach.
+
+Though we have achieved significant progress in this project. We also see that the work is not fully completed yet. We set out to benchmark running state transition function in various zkVM. We end up only be able to run `execute` mode in my local laptop for r0vm and pico.
+
+We will need a powerful GPU cluster in order to benchmark the full state transition with proof generation. Hopefully Grandine team would be able to work the various ecosystem team, and be able to perform the benchmarking in the future.
+
+Another possible direction is that there are various **proving network** bouncing up recently, [Boundless Network]() with prover network running behind, [SP1 proving network]() that recently launch. Grandine team could explore sending the state transition function acrossing to these network and get the proof generated back.
 
 ## Self-evaluation
 
-- general feedback about your project and activity within EPF
+<!-- - general feedback about your project and activity within EPF
 - Be realistic and reflect on your progress, achievements, your satisfaction and criticism
+ -->
