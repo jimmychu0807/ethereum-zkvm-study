@@ -14,6 +14,8 @@ Each fellow participated in this project was assigned a zkVM integration:
 
 The original project proposal can be [referenced here](https://github.com/eth-protocol-fellows/cohort-six/blob/master/projects/grandine_beacon_zkVMs_snarkification.md). This report details the integration of Brevis Pico zkVM, key refactoring for modularity, adding a new test case, and proof generation attempts on both local CPUs and GPUs via the Bonsai Network.
 
+This report is accompanied with a [project presentation](https://docs.google.com/presentation/d/1a1n-GMzIe9ALcUcrq4O_Tme6zmKSvh-lfnIxbqo7l5o/edit?usp=sharing).
+
 ## Detail Work & Final State
 
 ### Host and Guest Code Overview
@@ -45,6 +47,8 @@ The [guest code](https://github.com/grandinetech/grandine/tree/develop/zkvm/gues
 There are two modes for guest execution: **execute** (computation only) and **prove** (computation plus zk-proof generation). Execute mode acts as a sanity check, while prove mode is the focus for benchmarking but is much more time-intensive.
 
 ### Grandine PR #386
+
+Work described here is comprised in [grandinetech/grandine PR #386](https://github.com/grandinetech/grandine/pull/386).
 
 The `zkvm/host/backend.rs` was refactored for modularity, separating implementations for each zkVM (e.g., [risc0](https://github.com/grandinetech/grandine/pull/386/files#diff-43126fe75df96cea60b7e30fcd691a2892e10809631d94259cc48252208216ef), [sp1](https://github.com/grandinetech/grandine/pull/386/files#diff-4a3e27d25c765c36ddf6df426ce49e0ab5472665c14217248cd7ed385a82a2ae)), and a new [Pico host implementation](https://github.com/grandinetech/grandine/pull/386/files#diff-1d8fb10e7eb152891f7c37b4a249dc4092ff33434189694ee7aee7d77cfa5a9e) was added, following the established trait-based API pattern.
 
