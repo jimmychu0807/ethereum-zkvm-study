@@ -67,11 +67,11 @@ The BLS12-381 changes were notably intricate, with over 25 customizations for di
 
 For [**G1Affine** generator function](https://github.com/grandinetech/universal-precompiles/blob/dfe056b1cde164284237b53abc0ffc903a2247a1/src/g1.rs#L231-L279).
 
-![GA1Affine](../assets/ss-ga1affine.png)
+![GA1Affine](../assets/final-report/ss-ga1affine.png)
 
 For the [**Scalar** invert operation](https://github.com/grandinetech/universal-precompiles/blob/dfe056b1cde164284237b53abc0ffc903a2247a1/src/scalar.rs#L720-L782).
 
-![GA1Affine](../assets/ss-scalar-invert.png)
+![GA1Affine](../assets/final-report/ss-scalar-invert.png)
 
 Brevis Pico also have a `target_vendor` string of **risc0**, which is the same as r0vm. To distinguish Pico from r0vm, an additional feature flag (**zkvm-pico**) was added, alongside **zkvm-risc0**.
 
@@ -108,11 +108,11 @@ Benchmarking was run informally on a Macbook Air M1 2020, 16GB RAM.
 | empty-block-transition | 33.62s  | 164,850,074 |
 | pectra-wo-epoch | 528.43s  | 2,555,459,575 |
 | pectra-w-epoch | 2592.21s  | 12,685,893,340 |
-| mainnet-wo-epoch | Panicked with max memory exceeded ([explanation](https://github.com/brevis-network/pico/issues/48#issuecomment-3286930946)  | n.a. |
+| mainnet-wo-epoch | Panicked with max memory exceeded ([explanation](https://github.com/brevis-network/pico/issues/48#issuecomment-3286930946)) | n.a. |
 
 Now we are really interested in running the test cases with proof generated. Unfortunately this takes a huge amount of time. Even the simplest test case takes 3 hours onward to run and I had to terminate the test mid-way.
 
-At the end, thank to another protocol fellow [Subhasish](https://github.com/Subhasish-Behera) who passed the API key to me, I was able to get a hand on running proving test on RiscZero [Bonsai Network](https://dev.risczero.com/litepaper) with GPU capability.
+At the end, I was able to get a hand on running proving test on RiscZero [Bonsai Network](https://dev.risczero.com/litepaper) with GPU capability, thank to another protocol fellow [Subhasish](https://github.com/Subhasish-Behera) who passed the API key to me.
 
 **r0vm (prove mode on Bonsai Network)**:
 
@@ -129,7 +129,7 @@ Two test cases errored due to exceeding compute quotas. Proof generation for tes
 
 This integration is one part of Grandine’s broader zkVM initiative, with other fellows working on Ziren and Zisk. Significant progress was made, yet full benchmarking in prove mode was limited by available hardware. Future work will require access to large GPU clusters to properly evaluate zkVM performance for state transition proofs.
 
-There is also interest in emerging proving networks, such as [Boundless Network](https://boundless.network/) and [SP1 Prover Network](https://explorer.succinct.xyz/provers), which now incentivize proof generation via network tokens. Grandine could also explore outsourcing proof generation to these services.
+There is also interest in emerging proving networks, such as [Boundless Network](https://boundless.network/) and [SP1 Prover Network](https://explorer.succinct.xyz/provers), which now incentivize proof generation by community provers via network tokens. Grandine could explore outsourcing proof generation to these services.
 
 ## Self-Evaluation
 
