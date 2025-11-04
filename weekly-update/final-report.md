@@ -137,6 +137,6 @@ Participating in the Ethereum Protocol Fellowship and zkVM integration has deepe
 
 This work clarified challenges around scalable proof generation and the goal of sub-12 second proofs for practical Ethereum mainnet use.
 
-Gratitude goes to the Ethereum Foundation and the Grandine team, especially [Saulius](https://github.com/sauliusgrigaitis), [Artiom](https://github.com/artiomTr), and [Povilas](https://github.com/povi), for mentorship and feedback on code contributions. The collaborative effort within EPF allows me to learn from other fellows about other facets of Ethereum development, notably FOCIL, PeerDAS, and SSZ optimization.
+Gratitude goes to the Ethereum Foundation, especially [Mario](https://github.com/taxmeifyoucan) and [Josh](https://github.com/joshdavislight), for running the amazing fellowship cohort, and the Grandine team, especially [Saulius](https://github.com/sauliusgrigaitis), [Artiom](https://github.com/artiomTr), and [Povilas](https://github.com/povi), for mentorship and feedback on code contributions. The collaborative effort within EPF allows me to learn from other fellows about other facets of Ethereum development, notably FOCIL, PeerDAS, and SSZ optimization.
 
 I plan to continue my work in the field of [programmable cryptography](https://0xparc.org/blog/programmable-cryptography-1), advancing privacy and improving user experience for blockchain users.
