@@ -1,138 +1,142 @@
-# Report on Brevis Pico zkVM integration & benchmarking of block state transition function in zkVM for Grandine
-<!--
-This final update is meant to be understandable by anyone who wants to learn about have you done in the cohort without diving into your project proposal and every update. Use it as a summary about current state of things with all relevant information and links.
--->
+# Report: Brevis Pico zkVM Integration & Benchmarking of the Block State Transition Function in zkVM for Grandine
 
 ## Project Abstract
 
-Grandine is an Ethereum client in both consensus and execution layers written in Rust. As Ethereum has an initiative of using zkVMs to generate proofs instead of re-computing the block state for block state transtion function (stf), Grandine team have written an extension framework that could easily integrate any kind of zkVM to benchmak its stf performance. The code of the extension framework is located inside Grandine main repository [`zkvm` directory](https://github.com/grandinetech/grandine/tree/develop/zkvm).
+Grandine is an Ethereum client implementing both consensus and execution layers in Rust. As Ethereum explores using zkVMs to generate proofs for block state transitions instead of relying on recomputation, the Grandine team has developed an extension framework that enables easy integration and benchmarking of any zkVM’s state transition function (STF). The extension framework can be found in Grandine’s main repository under the [`zkvm` directory](https://github.com/grandinetech/grandine/tree/develop/zkvm).
 
-With this framework, Grandine team have already integrated RiscZero [**r0vm**](https://github.com/grandinetech/grandine/tree/develop/zkvm/guest/risc0) and Succinct [**SP1**](https://github.com/grandinetech/grandine/tree/develop/zkvm/guest/sp1) zkVMs, and now want to integrate with other zkVMs.
+The framework currently supports integrations with RiscZero [**r0vm**](https://github.com/grandinetech/grandine/tree/develop/zkvm/guest/risc0) and Succinct [**SP1**](https://github.com/grandinetech/grandine/tree/develop/zkvm/guest/sp1) zkVMs, and is designed for extensibility to additional zkVMs.
 
-As there were a few fellows working on this initiative, each of us was assigned to integrate one zkVM.
+Each fellow participated in this project was assigned a zkVM integration:
 
-- [me](tk:github): [Brevis Pico](tk)
-- [Ritesh](tk:github): [ZKM Ziren](tk)
-- [Aman](tk:github): [Zisk](tk)
+- [me](https://github.com/jimmychu0807): [Brevis Pico](https://docs.brevis.network/)
+- [Ritesh](https://github.com/Dyslex7c): [ZKM Ziren](https://www.zkm.io/ziren)
+- [Aman](https://github.com/0xprivateChaos): [Zisk](https://0xpolygonhermez.github.io/zisk/introduction.html)
 
-In this report, I will detail out how I have integrated Brevis Pico zkvm in Grandine, refactored the zkvm extension to be more modular, requested to add one more test case to run, and attempts in running the actual zkvm proof generation in both CPU machine locally and GPU machine via Bonsai Network.
+The original project proposal can be [referenced here](https://github.com/eth-protocol-fellows/cohort-six/blob/master/projects/grandine_beacon_zkVMs_snarkification.md). This report details the integration of Brevis Pico zkVM, key refactoring for modularity, adding a new test case, and proof generation attempts on both local CPUs and GPUs via the Bonsai Network.
 
 ## Detail Work & Final State
 
-### Main zkvm host and guest code
+### Host and Guest Code Overview
 
-The work described here is covered in [grandinetech/grandine PR #386](https://github.com/grandinetech/grandine/pull/386).
+The integration is completed in [grandinetech/grandine PR #386](https://github.com/grandinetech/grandine/pull/386). The framework consists of host and guest code sections.
 
-There is a host and guest code section in the zkvm extension architecture. The [host code](https://github.com/grandinetech/grandine/blob/develop/zkvm/host/src/main.rs) section performs the following functionality:
+The [host code](https://github.com/grandinetech/grandine/blob/develop/zkvm/host/src/main.rs):
 
-- Based on the test case selected from cli arguments, retrieve the 1) chain/phase config, 2) signed beacon block in [SSZ format](tk), 3) beacon state in SSZ format, and 4) pre-compute and store the public key cache for performance optimization.
+- Based on the test case selected from cli arguments, retrieves four input parameters:
+  1. Chain/phase config
+  2. Signed beacon block in [SSZ format](https://www.ssz.dev/active)
+  3. Beacon state in SSZ format
+  4. A public key cache
 
-- Call the state transition function with the four input paramters above, and store the new state root (the result). At the end we will compare this value with the one computed from zkVM and they should match.
+- Executes the state transition function and records the new state root for comparison against zkVM output.
 
-- The host then initiate the zkvm runtime and pass in the four input paramters for computation.
+- Initializes the zkVM runtime, passing in the four inputs for computation.
 
-- The host retrieves the final state root computed from the zkvm runtime and compare with its own value.
+- Compares the zkVM-derived state root with the host computation.
 
-The [guest code](tk) is run inside the zkvm runtime. There is an implementation of the guest code for each zkVM. It performs the following functionality:
+The [guest code](https://github.com/grandinetech/grandine/tree/develop/zkvm/guest) is implemented for each zkVM and provides:
 
-- It retrieves and parses the four input paramters from the host, deserializing the object from SSZ format.
+- Parsing and deserialization of input parameters from the host.
 
-- Run the state transition based on the four inputs, and compute the state root of the new state. It may or may not generate a zk-proof depending on its running mode.
+- Execution of state transition and calculation of the new state root (with or without proof generation, depending on the mode).
 
-- Return the state root and possibly with the proof back to the host.
+- Returning results and, if applicable, the proof back to the host.
 
-There are two running modes for the guest, **execute** mode and **prove** mode. Execute mode will only execute the guest code instructions in zkvm runtime without generating proofs. Prove mode will execute the guest code and generate the zk-proof. Execute mode can be seen as a sanity check that the execution logic and computation is performed correctly, while the zk-proof generation is what we are really interested in and the most time-consuming step.
+There are two modes for guest execution: **execute** (computation only) and **prove** (computation plus zk-proof generation). Execute mode acts as a sanity check, while prove mode is the focus for benchmarking but is much more time-intensive.
 
-### Main Grandine PR#386
+### Grandine PR #386
 
-I first refactored the `zkvm/host/backend.rs` so each zkVM-specific implementation is saved in a separate module (e.g. [risc0](tk) [sp1](tk)). Then I added my implementation of [Pico host code](https://github.com/grandinetech/grandine/pull/386/files#diff-1d8fb10e7eb152891f7c37b4a249dc4092ff33434189694ee7aee7d77cfa5a9e), which is more or less the same as the code of other zkVM by implementing the necessary trait calling the specific zkVM apis.
+The `zkvm/host/backend.rs` was refactored for modularity, separating implementations for each zkVM (e.g., [risc0](https://github.com/grandinetech/grandine/pull/386/files#diff-43126fe75df96cea60b7e30fcd691a2892e10809631d94259cc48252208216ef), [sp1](https://github.com/grandinetech/grandine/pull/386/files#diff-4a3e27d25c765c36ddf6df426ce49e0ab5472665c14217248cd7ed385a82a2ae)), and a new [Pico host implementation](https://github.com/grandinetech/grandine/pull/386/files#diff-1d8fb10e7eb152891f7c37b4a249dc4092ff33434189694ee7aee7d77cfa5a9e) was added, following the established trait-based API pattern.
 
-A [helper build script](https://github.com/grandinetech/grandine/pull/386/files#diff-2015ba7f1b0aad9904659f52f2844d91f022c63a2b10db135b2332668943a4a0) is written so that building the zkvm-host code will automatically trigger building the zkvm guest code as well. Otherwise, two separate commands are needed to compile both the host and guest code. Care need to be taken as Pico requires building with nightly rust version, while the main Grandine repo run with stable rust version. So all pico related build and execution command must be run with prefixing the nighly version, e.g. `cargo +nightly-2025-08-04 ...`.
+A [helper build script](https://github.com/grandinetech/grandine/pull/386/files#diff-2015ba7f1b0aad9904659f52f2844d91f022c63a2b10db135b2332668943a4a0) is added to automate building both host and guest code in a bundle. Since Pico requires the nightly Rust toolchain, all Pico-related build commands must use the nightly prefix (e.g., `cargo +nightly-2025-08-04 ...`).
 
-The [zkVM guest code](https://github.com/grandinetech/grandine/pull/386/files#diff-b622fd118817f3bd6bf7b754cca00afa983d87cc40544a6d0cfd144fe7548529) for Pico is also similar to the guest code for other zkVMs, calling Pico-specific zkvm guest API.
+The [Pico guest code](https://github.com/grandinetech/grandine/pull/386/files#diff-b622fd118817f3bd6bf7b754cca00afa983d87cc40544a6d0cfd144fe7548529) mirrors other integrations, using Pico’s specific APIs.
 
-Lastly a github CI workflow script [`zkvm-test.yml`](https://github.com/grandinetech/grandine/pull/386/files#diff-3100b4a9081a2d21a9a64759e0d35e33684fac9cb222c56d8c00135f23beaed6) is added so different zkVM host and guest code get built and tested as new codes/PRs got merged to the codebase. This serves as a sanity check to ensure that the future code change doesn't break the existing zkVM host and guest code.
+Additionally, the CI workflow [`zkvm-test.yml`](https://github.com/grandinetech/grandine/pull/386/files#diff-3100b4a9081a2d21a9a64759e0d35e33684fac9cb222c56d8c00135f23beaed6) was introduced to test and validate builds for different zkVMs, serving as a continual integration sanity check.
 
-### Accompanied PRs to SHA2 and BLS12-381
+### SHA2 and BLS12-381 Customization
 
-Now the state transition function heavily relies on SHA256 hash function and BLS12-381 elliptic curve based cryptography. Each zkVM has their own tweaks and optimization on running the hash function and elliptic curve arithmetics. So we need to add the own tweaks for Brevis Pico zkVM.
+The state transition function relies heavily on SHA256 and BLS12-381 cryptography. Each zkVM necessitates optimizations for these operations, prompting custom tweaks in Grandine’s [sha-256](https://github.com/grandinetech/universal-precompiles/tree/RustCrypto-hashes/sha2-v0.10.9) and [bls12-381](https://github.com/grandinetech/universal-precompiles/tree/zkcrypto/bls12_381-6bb9695) precompile libraries.
 
-Grandine has a universal-precompile packages of [sha-256](https://github.com/grandinetech/universal-precompiles/tree/RustCrypto-hashes/sha2-v0.10.9) and [bls12-381](https://github.com/grandinetech/universal-precompiles/tree/zkcrypto/bls12_381-6bb9695) that got conditionally turned on for each zkVM based on the compilation target.
+Supporting Brevis Pico required patches:
 
-To support Brevis Pico, I have to patch these two libraries:
-
-- sha-256: [grandinetech/universal-precompiles PR #3](https://github.com/grandinetech/universal-precompiles/pull/3) and
+- sha-256: [grandinetech/universal-precompiles PR #3](https://github.com/grandinetech/universal-precompiles/pull/3)
 - bls12-381: [grandinetech/universal-precompiles PR #4](https://github.com/grandinetech/universal-precompiles/pull/4)
 
-The BLS12-381 PR is particularly delicate as there are more than 25 places that need to apply unique customization based on different zkVM optimization. Brevis Pico also have a `target_vendor` string of **risc0**, which is the same as r0vm. So we add an additional feature flag **zkvm-pico** during compilation to distinguish between Pico from r0vm. We also add a **zkvm-risc0**feature flag to make this distinction clear.
+The BLS12-381 changes were notably intricate, with over 25 customizations for different zkVM targets. Here is a taste:
 
-This can be seen in:
-- bls-crypto library [cargo.toml](https://github.com/grandinetech/grandine/pull/386/files#diff-b9a966a6766d089f8f3954f894313fd1f550d596d3e5d2ecacf8f895fcd89c74)
-- sha-256 [cargo.toml](https://github.com/grandinetech/universal-precompiles/pull/3/files#diff-704ad48075ec95eb928ef5912af78756de25009feefecbc6b18e2d0bc5c20a48)
-- bls12-381 [cargo.toml](https://github.com/grandinetech/universal-precompiles/pull/4/files#diff-2e9d962a08321605940b5a657135052fbcef87b5e360662bb527c96d9a615542)
+For [**G1Affine** generator function](https://github.com/grandinetech/universal-precompiles/blob/dfe056b1cde164284237b53abc0ffc903a2247a1/src/g1.rs#L231-L279).
 
-### Benchmark Running
+![GA1Affine](../assets/ss-ga1affine.png)
 
-There were originally three test cases comprised in the zkVM extension framework. Responding to my request, Grandine team added another empty block transition test coming from the [consensus-spec-test](https://github.com/ethereum/consensus-spec-tests/tree/master/tests/mainnet/electra/sanity/blocks/pyspec_tests/empty_block_transition) to the extension framework as a sanity check.
+For the [**Scalar** invert operation](https://github.com/grandinetech/universal-precompiles/blob/dfe056b1cde164284237b53abc0ffc903a2247a1/src/scalar.rs#L720-L782).
 
-There are now four test cases, ranked below from the least computing-intensive to the most.
+![GA1Affine](../assets/ss-scalar-invert.png)
 
-1. An empty block transition test
-2. Pectra Devnet without epoch transition
-3. Pectra Devnet with epoch transition
-4. Mainnet without epoch transition
+Brevis Pico also have a `target_vendor` string of **risc0**, which is the same as r0vm. To distinguish Pico from r0vm, an additional feature flag (**zkvm-pico**) was added, alongside **zkvm-risc0**.
 
-I ran an informal benchmark on my Macbook Air 2020 with M1 chip and 16GB RAM.
+This is reflected in:
 
-In execute mode, for **r0vm**:
+- bls-crypto [`cargo.toml`](https://github.com/grandinetech/grandine/pull/386/files#diff-b9a966a6766d089f8f3954f894313fd1f550d596d3e5d2ecacf8f895fcd89c74)
+- sha-256 [`cargo.toml`](https://github.com/grandinetech/universal-precompiles/pull/3/files#diff-704ad48075ec95eb928ef5912af78756de25009feefecbc6b18e2d0bc5c20a48)
+- bls12-381 [`cargo.toml`](https://github.com/grandinetech/universal-precompiles/pull/4/files#diff-2e9d962a08321605940b5a657135052fbcef87b5e360662bb527c96d9a615542)
 
-|  | empty-block-transition | pectra-wo-epoch | pectra-w-epoch | mainnet-wo-epoch |
-| -------- | -------- | -------- |--|--|
-| time elapsed | 5.59s | 117.43s | 927.43s | 3066.35s |
-| execution cycles | 241,696,768 | 4,909,432,832 | 39,038,484,480 | 116,489,453,568 |
+### Benchmark Results
 
-In execute mode, for **pico**:
+Responding to my request, Grandine team added an empty block transition test coming from the [consensus-spec-test](https://github.com/ethereum/consensus-spec-tests/tree/master/tests/mainnet/electra/sanity/blocks/pyspec_tests/empty_block_transition), raising the test suite to four cases (ranked below by computational cost):
 
-|  | empty-block-transition | pectra-wo-epoch | pectra-w-epoch | mainnet-wo-epoch |
-| -------- | -------- | -------- |--|--|
-| time elapsed | 33.62s | 528.43s | 2592.21s | Panicked with max memory exceeded. [Read explanation](https://github.com/brevis-network/pico/issues/48#issuecomment-3286930946).|
-| execution cycles | 164,850,074 | 2,555,459,575 | 12,685,893,340 | n.a. |
+1. Empty block transition test (`empty-block-transition`)
+2. Pectra Devnet without epoch transition (`pectra-wo-epoch`)
+3. Pectra Devnet with epoch transition (`pectra-w-epoch`)
+4. Mainnet without epoch transition (`mainnet-wo-epoch`)
+
+Benchmarking was run informally on a Macbook Air M1 2020, 16GB RAM.
+
+**r0vm (execute mode)**:
+
+| Case | Time | Execution Cycles |
+| ----- | ---------| -------------------------|
+| empty-block-transition | 5.59s  | 241,696,768 |
+| pectra-wo-epoch | 117.43s  | 4,909,432,832 |
+| pectra-w-epoch | 927.43s  | 39,038,484,480 |
+| mainnet-wo-epoch | 3066.35s  | 116,489,453,568 |
+
+**Pico (execute mode)**:
+
+| Case | Time | Execution Cycles |
+| ----- | ---------| -------------------------|
+| empty-block-transition | 33.62s  | 164,850,074 |
+| pectra-wo-epoch | 528.43s  | 2,555,459,575 |
+| pectra-w-epoch | 2592.21s  | 12,685,893,340 |
+| mainnet-wo-epoch | Panicked with max memory exceeded ([explanation](https://github.com/brevis-network/pico/issues/48#issuecomment-3286930946)  | n.a. |
 
 Now we are really interested in running the test cases with proof generated. Unfortunately this takes a huge amount of time. Even the simplest test case takes 3 hours onward to run and I had to terminate the test mid-way.
 
-At the end, I was able to get a hand on running proving test on RiscZero [Bonsai Network](tk), with GPU capability, thank to another protocol fellow [Subhasish](tk) who passed his API key to me.
+At the end, thank to another protocol fellow [Subhasish](https://github.com/Subhasish-Behera) who passed the API key to me, I was able to get a hand on running proving test on RiscZero [Bonsai Network](https://dev.risczero.com/litepaper) with GPU capability.
 
-In prove mode, for **r0vm**
+**r0vm (prove mode on Bonsai Network)**:
 
-|  | consensus-spec-test | pectra-wo-epoch | pectra-w-epoch | mainnet-wo-epoch |
-| -------- | -------- | -------- |--|--|
-| time elapsed | 58.12s | 469.90s | error out | error out |
+| Case | Time |
+| ----- | ---------|
+| empty-block-transition | 58.12s |
+| pectra-wo-epoch | 469.90s |
+| pectra-w-epoch | error out |
+| mainnet-wo-epoch | error out |
 
-Two test cases error out as it seems the computation has exceeded the account computing quota on Bonsai Network.
+Two test cases errored due to exceeding compute quotas. Proof generation for test cases remains very time-consuming, and more powerful GPU hardware is necessary for meaningful benchmarks.
 
-## Current Impact and Future of the project
-<!--
-Potential next steps and improvements, use cases in the ecosystem
--->
+## Project Impact and Future Work
 
-This is my part of Grandine zkVM integration with Brevis Pico. Other fellows are integrating Ziren (Ritesh) and Zisk (Aman) into Grandine using similar approach.
+This integration is one part of Grandine’s broader zkVM initiative, with other fellows working on Ziren and Zisk. Significant progress was made, yet full benchmarking in prove mode was limited by available hardware. Future work will require access to large GPU clusters to properly evaluate zkVM performance for state transition proofs.
 
-Though we have achieved significant progress in this project, I also see the work is not fully completed yet. We set out to benchmark running state transition function in various zkVMs. We end up only be able to run `execute` mode in my local laptop for r0vm and pico.
+There is also interest in emerging proving networks, such as [Boundless Network](https://boundless.network/) and [SP1 Prover Network](https://explorer.succinct.xyz/provers), which now incentivize proof generation via network tokens. Grandine could also explore outsourcing proof generation to these services.
 
-We will need a powerful GPU cluster in order to benchmark the full state transition with proofs generated. Hopefully Grandine team would be able to work the various ecosystem team to get the GPU computing power and benchmark the stf performance in the future.
+## Self-Evaluation
 
-Another possible direction is that various **proving networks** emerged recently. [Boundless Network](tk) have growh a prover network community, while [SP1 proving network]() have launched three months ago with token launched to incentivized its proving members. Grandine team could also explore sending the state transition function proving requests across to these networks and get the proof generated back.
+Participating in the Ethereum Protocol Fellowship and zkVM integration has deepened my understanding of Ethereum client testing strategies and the importance of unified test suites across diverse client implementations. Tools like EF’s [consensus-specs](https://github.com/ethereum/consensus-specs), [consensus-spec-tests](https://github.com/ethereum/consensus-spec-tests), [execution-spec-tests](https://github.com/ethereum/execution-spec-tests), and Kurtosis [Ethereum Package](https://github.com/ethpandaops/ethereum-package) exemplify best practices for common test cases and APIs.
 
-## Self-evaluation
-<!--
-- general feedback about your project and activity within EPF
-- Be realistic and reflect on your progress, achievements, your satisfaction and criticism
--->
+This work clarified challenges around scalable proof generation and the goal of sub-12 second proofs for practical Ethereum mainnet use.
 
-Overall, through the engagement of zkVM integration work via Ethereum Protocol Fellowship program, I become more familiar with how Ethereum clients are tested generally. Imagine there are more than six clients available by different implementation teams, yet they need to work together coherently as a single network. We need a set of thorough test cases that client teams could test against with a unified test APIs. The Ethereum Foundation [consensus-spec](tk) [consensus-spec-test](tk) and [execution-spec-test](tk), and numerous other testing tools (e.g. Kurtosis [Ethereum Package](https://github.com/ethpandaops/ethereum-package)) serve as a good example on how to create a common set of test cases that work across various clients.
+Gratitude goes to the Ethereum Foundation and the Grandine team, especially [Saulius](https://github.com/sauliusgrigaitis), [Artiom](https://github.com/artiomTr), and [Povilas](https://github.com/povi), for mentorship and feedback on code contributions. The collaborative effort within EPF allows me to learn from other fellows about other facets of Ethereum development, notably FOCIL, PeerDAS, and SSZ optimization.
 
-I also learned more about Ethereum initiative of integrating zkVM in generating proof rather than re-computing all the state transition function in block production, and come to appreciate the challenge we have to overcome in order to generate real-time proof (currently meaning generating proof in less than 12 sec) in the mainnet environment.
-
-In here, I would like to express my heartfelt gratitude to Ethereum Foundation and Grandine client team and other fellows that help me along in this journey. Ethereum Foundation have allocated resources to support this program so fellows could work and contribute directly with client teams. Grandine team (particularly [Saulius](), [Artiomtr](), and [Povilas]()) have contributed their valuation time in mentoring me and other fellows, carefully giving me feedback on my PRs. Hopefully they are happy with the contribution I and other fellows have made. Last but not least, The scope of work in Ethereum ecosystem is so vast that I have learned a lot from other fellows as well, e.g. on FOCIL implementation, PeerDAS, and some on SSZ optimization.
-
-I plan to continue my work on the [programmable cryptography](tk) domain and bring privacy to blockchain users and improve the UX while using these privacy features.
+I plan to continue my work in the field of [programmable cryptography](https://0xparc.org/blog/programmable-cryptography-1), advancing privacy and improving user experience for blockchain users.
