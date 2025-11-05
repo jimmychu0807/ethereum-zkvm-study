@@ -2,7 +2,7 @@
 
 ## Project Abstract
 
-Grandine is an Ethereum client implementing both consensus and execution layers in Rust. As Ethereum explores using zkVMs to generate proofs for block state transitions instead of relying on recomputation, the Grandine team has developed an extension framework that enables easy integration and benchmarking of any zkVM’s state transition function (STF). The extension framework can be found in Grandine’s main repository under the [`zkvm` directory](https://github.com/grandinetech/grandine/tree/develop/zkvm).
+Grandine is a fast and lightweight Ethereum consensus client written in Rust. As Ethereum explores using zkVMs to generate proofs for block state transitions instead of relying on recomputation, the Grandine team has developed an extension framework that enables easy integration and benchmarking of any zkVM’s state transition function (STF). The extension framework can be found in Grandine’s main repository under the [`zkvm` directory](https://github.com/grandinetech/grandine/tree/develop/zkvm).
 
 The framework currently supports integrations with RiscZero [**r0vm**](https://github.com/grandinetech/grandine/tree/develop/zkvm/guest/risc0) and Succinct [**SP1**](https://github.com/grandinetech/grandine/tree/develop/zkvm/guest/sp1) zkVMs, and is designed for extensibility to additional zkVMs.
 
