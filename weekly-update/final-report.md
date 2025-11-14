@@ -144,3 +144,13 @@ This work clarified challenges around scalable proof generation and the goal of 
 Gratitude goes to the Ethereum Foundation, especially [Mario](https://github.com/taxmeifyoucan) and [Josh](https://github.com/joshdavislight), for running the amazing fellowship cohort, and the Grandine team, especially [Saulius](https://github.com/sauliusgrigaitis), [Artiom](https://github.com/artiomTr), and [Povilas](https://github.com/povi), for mentorship and feedback on code contributions. The collaborative effort within EPF allows me to learn from other fellows about other facets of Ethereum development, notably FOCIL, PeerDAS, and SSZ optimization.
 
 I plan to continue my work in the field of [programmable cryptography](https://0xparc.org/blog/programmable-cryptography-1), advancing privacy and improving user experience for blockchain users.
+
+## Reference
+
+- [Etheruem Protocol Fellowship conclusion presentation](https://docs.google.com/presentation/d/1a1n-GMzIe9ALcUcrq4O_Tme6zmKSvh-lfnIxbqo7l5o/edit?usp=sharing)
+- [Weekly/Bi-weekly progress update](https://github.com/jimmychu0807/ethereum-zkvm-study/blob/main/weekly-update/README.md)
+- [Grandine](https://grandine.io/), [github repo](https://github.com/grandinetech/grandine)
+- [Brevis Pico](https://pico-docs.brevis.network/), [github repo](https://github.com/brevis-network/pico)
+- [RiscZero VM](https://dev.risczero.com/api)
+- [Succinct SP1](https://docs.succinct.xyz/docs/sp1/introduction)
+- [Zisk](https://0xpolygonhermez.github.io/zisk), [github repo](https://github.com/0xPolygonHermez/zisk)
