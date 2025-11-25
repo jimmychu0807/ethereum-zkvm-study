@@ -237,3 +237,17 @@ Geth, golang, EF
 Nethermind, C# / .NET, Nethermind
 Reth, Rust, https://github.com/paradigmxyz/reth, Paradigm
 Ethereumjs, typescript, EF
+
+# Ethereum Research Topics
+
+## Interop
+- [Synchronous Composability vs. Intents: Two Paths to Ethereum-Wide Interop](https://ethresear.ch/t/synchronous-composability-vs-intents-two-paths-to-ethereum-wide-interop)
+  - it layout the framework of synchronous composibility
+    - compose.network
+    - Espresso
+    - scope.protocol
+
+  - Intent-based model
+    - open itents framework
+    - there is a solver that perform the complicated logics.
+    - it is asynchronous
