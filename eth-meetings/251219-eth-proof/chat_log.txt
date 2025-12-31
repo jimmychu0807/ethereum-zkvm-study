@@ -1,0 +1,260 @@
+2025-12-19 22:02:00 From Fireflies.ai Notetaker Roberto to Everyone:
+	Roberto invited Fireflies.ai here to record & take notes. View Security & Privacy info: https://fireflies.ai/policy
+	
+	Type:
+	'/ff leave' - Remove Fireflies
+	
+	View Realtime notes here: https://app.fireflies.ai/live/01KCPA5KRKWJ1VSGEHJGFY2BV2?ref=live_chat
+	
+2025-12-19 22:02:37 From Alexandre Belling to Everyone:
+	[This is an encrypted message]
+	
+2025-12-19 22:02:46 From Abix-ZisK to Everyone:
+	i need this song
+	
+2025-12-19 22:02:46 From Ariel Gabizon to Everyone:
+	pairing is caring :)
+	
+2025-12-19 22:02:47 From Jimmy Chu to Everyone:
+	Where can I get this music?
+	
+2025-12-19 22:03:02 From read.ai meeting notes to Jimmy Chu (direct message):
+	Kai, Parthasarathy, Venus, and li added read.ai meeting notes to the meeting.
+	
+	Read provides AI generated meeting summaries to make meetings more effective and efficient. View our Privacy Policy at https://www.read.ai/pp
+	
+	Type "read stop" to disable, or "opt out" to delete meeting data.
+	
+2025-12-19 22:03:11 From Parthasarathy Ramanujam to Everyone:
+	😆 ringtone change for the new year
+	
+2025-12-19 22:03:13 From Douglas's Notetaker (Otter.ai) to Everyone:
+	Hi, I'm an AI assistant helping Douglas Li take notes for this meeting. Follow along the transcript here:  https://otter.ai/u/jvDgHGcwpDI4qQF0FJR-5zltFZU?utm_source=va_chat_link_1
+	
+	You can see screenshots and add highlights and comments. After the meeting, you'll get a summary and action items.
+	
+	
+	If you'd like to stop this recording, you can go to the link above and click the Stop button.
+	
+	If you'd like to stop the recordings for all Otter Notetakers in this meeting, you can type "otter stop" in Zoom chat.
+	
+	
+2025-12-19 22:04:57 From Ariel Gabizon to Everyone:
+	can repeat/write here the tlg link?
+	
+2025-12-19 22:05:45 From Will Corcoran to Everyone:
+	Replying to "can repeat/write here the tlg link?":
+	tlg?
+	
+2025-12-19 22:05:51 From Sergey Shemyakov | L2BEAT to Everyone:
+	Replying to "can repeat/write here the tlg link?":
+	t.me/ethproofs_community
+	Will Corcoran, Ariel Gabizon:🙏
+	
+2025-12-19 22:07:30 From Stefan Starflinger to Everyone:
+	https://t.me/ethproofs_community
+	
+2025-12-19 22:12:59 From kev to Everyone:
+	Is this using Goldilocks with a degree 2 or 3 extension?
+	
+2025-12-19 22:15:32 From Ulrich Haboeck to Everyone:
+	Why degree 6 extension for 128 bit security?
+	
+2025-12-19 22:15:48 From Ulrich Haboeck to Everyone:
+	Yes but you are using RS codes?
+	
+2025-12-19 22:16:19 From Sergey Shemyakov | L2BEAT to Everyone:
+	Replying to "Yes but you are using RS codes?":
+	I don’t think Linea prover uses RS codes
+	
+2025-12-19 22:16:23 From kev to Everyone:
+	Is this 128 provable or conjectured?
+	
+2025-12-19 22:16:29 From Ulrich Haboeck to Everyone:
+	Replying to "Yes but you are using RS codes?":
+	Oh thanks
+	
+2025-12-19 22:16:30 From Alexandre Belling to Everyone:
+	Replying to "Yes but you are using RS codes?":
+	Linea does
+	Sergey Shemyakov | L2BEAT:👀
+	
+2025-12-19 22:16:38 From Alexandre Belling to Everyone:
+	Replying to "Yes but you are using RS codes?":
+	Use RS code
+	
+2025-12-19 22:16:40 From Ulrich Haboeck to Everyone:
+	right
+	
+2025-12-19 22:17:14 From Ben Diamond to Everyone:
+	With the new result of Ulrich et al, deg-5 should be possible?
+	
+2025-12-19 22:17:48 From Alexandre Belling to Everyone:
+	Replying to "Is this 128 provable or conjectured?":
+	Proved
+	kev:👍
+	
+2025-12-19 22:17:58 From Ulrich Haboeck to Everyone:
+	(With grinding yes.)
+	Ben Diamond, Alexandre Belling:👍
+	
+2025-12-19 22:18:00 From Alexandre Belling to Everyone:
+	Replying to "With the new result of Ulrich et al, deg-5 should ...":
+	I’ll have to check. Thanks for the pointer
+	
+2025-12-19 22:18:37 From Ulrich Haboeck to Everyone:
+	(Without grinding deg 5 is too small for large traces
+	Alexandre Belling:👍
+	
+2025-12-19 22:19:03 From Alexandre Belling to Everyone:
+	Replying to "(Without grinding deg 5 is too small for large tra...":
+	Yes, just the SZ loss put you under 128 bits
+	
+2025-12-19 22:19:21 From Tom Wambsgans to Everyone:
+	extension 6 for KolaBear may potentially be faster than 5, cf https://github.com/Consensys/gnark-crypto/pull/772
+	
+2025-12-19 22:19:53 From Ulrich Haboeck to Everyone:
+	How does that compare to the memory disadvantage?
+	
+2025-12-19 22:19:57 From Alexandre Belling to Everyone:
+	Replying to "extension 6 for KolaBear may potentially be faster...":
+	Yes, that was what seems to surface from benches
+	
+2025-12-19 22:20:47 From Vishal Singh to Everyone:
+	not sharable screen
+	
+2025-12-19 22:20:55 From Tom Wambsgans to Everyone:
+	Replying to "How does that compare to the memory disadvantage?":
+	Agree, there is this tradoff, and also proof size
+	
+2025-12-19 22:21:05 From Remco Bloemen to Everyone:
+	Replying to "extension 6 for KolaBear may potentially be faster...":
+	What explains this?
+	
+2025-12-19 22:21:07 From Will Corcoran to Everyone:
+	Replying to "not sharable screen":
+	It was set to hosts only - I just updated it
+	
+2025-12-19 22:21:19 From Will Corcoran to Everyone:
+	Replying to "not sharable screen":
+	You should be good to go now.  Sorry for that
+	
+2025-12-19 22:21:21 From Vishal Singh to Everyone:
+	oky, ty
+	
+2025-12-19 22:21:32 From Gaylord Warner to Everyone:
+	How many zkVMs out there now in total btw? 42?
+	
+2025-12-19 22:22:13 From Will Corcoran to Everyone:
+	Replying to "How many zkVMs out there now in total btw? 42?":
+	That sounds about right.  Not sure on the exact number but ~40
+	
+2025-12-19 22:23:47 From kev to Everyone:
+	What CPU was being used here?
+	
+2025-12-19 22:24:11 From Kunxian Xia to Everyone:
+	AMD EPYC 9554 64-Core Processor
+	kev, Ming, Xiuqi Yang:👍
+	
+2025-12-19 22:26:00 From Alexandre Belling to Everyone:
+	Replying to "extension 6 for KolaBear may potentially be faster...":
+	Better asking Youssef, but AFAIU is that 6 allows doing an extension tower which helps reducing the total number of operations.
+	
+2025-12-19 22:28:47 From Sergey Shemyakov | L2BEAT to Everyone:
+	Vishal, could you please post links to your GH?
+	
+2025-12-19 22:29:03 From Will Corcoran to Everyone:
+	https://github.com/ZippelLabs/ZP1
+	Sergey Shemyakov | L2BEAT, Vishal Singh, sid:🙏
+	
+2025-12-19 22:29:04 From kev to Everyone:
+	Replying to "Vishal, could you please post links to your GH?":
+	I think the zkVM is: https://github.com/ZippelLabs/ZP1
+	Sergey Shemyakov | L2BEAT, Vishal Singh:🙏
+	
+2025-12-19 22:32:29 From Vishal Singh to Everyone:
+	thanks will
+	
+2025-12-19 22:33:31 From reza | 🐜 to Everyone:
+	6000 = rtx pro 6000?
+	
+2025-12-19 22:33:44 From Justin Drake to Everyone:
+	Replying to "6000 = rtx pro 6000?":
+	yes
+	reza | 🐜:👍
+	
+2025-12-19 22:34:48 From Robert Remen | Matter Labs to Everyone:
+	Replying to "6000 = rtx pro 6000?":
+	Blackwell, not Ada
+	
+2025-12-19 22:35:20 From Divya Ranjan Pattanaik to Everyone:
+	Already excited for Cannes.
+	Andrei Ivasko:❤️
+	Wolfgang Vitale:🔥
+	
+2025-12-19 22:35:34 From reza | 🐜 to Everyone:
+	Replying to "6000 = rtx pro 6000?":
+	The beast with 96gb vram.
+	
+2025-12-19 22:36:12 From Will Corcoran to Everyone:
+	https://luma.com/beast_mode
+	
+2025-12-19 22:36:20 From Will Corcoran to Everyone:
+	https://luma.com/fort_mode
+	Vishal Singh, Guillaume Claret:❤️
+	
+2025-12-19 22:39:17 From Ben Diamond to Everyone:
+	Humble pushback: I would take a 100-bit proven system with very careful engineering that I fully trusted, versus a “128-bit proven” one that was scrappy and could have bugs.
+	
+2025-12-19 22:39:43 From Benedikt Wagner to Everyone:
+	Replying to "Humble pushback: I would take a 100-bit proven sys...":
+	I think what we want is 128 with very careful engineering 🙂
+	Divya Ranjan Pattanaik, Thomas Coratger, Arantxa Zapico:💯
+	
+2025-12-19 22:41:12 From Remco Bloemen to Everyone:
+	Replying to "Humble pushback: I would take a 100-bit proven sys...":
+	I’d consider 128 bit default a sign of careful engineering.
+	
+	(Edit: I mean this mostly in the converse: defaulting on <128 is a sign of less-than-careful engineering)
+	Vishal Singh, Salih Erdem Koçak, Ben Diamond:👍
+	
+2025-12-19 22:41:20 From Ben Diamond to Everyone:
+	Replying to "Humble pushback: I would take a 100-bit proven sys...":
+	Sure. Let’s just not focus on superficial “number of bits” + proven/conjectured and ignore things like engineering quality standards
+	Remco Bloemen:👍
+	
+2025-12-19 22:41:44 From Benedikt Wagner to Everyone:
+	Replying to "Humble pushback: I would take a 100-bit proven sys...":
+	Fully agree Ben 🙂 we should of course not ignore engineering quality standards 🙂
+	Ben Diamond, Arantxa Zapico:👍
+	
+2025-12-19 22:43:06 From Divya Ranjan Pattanaik to Everyone:
+	The Sierpinski triangle :)
+	
+2025-12-19 22:47:03 From Will Corcoran to Everyone:
+	SMS = santa, mario, soundness
+	vanhger:🫁
+	
+2025-12-19 22:47:20 From reza | 🐜 to Everyone:
+	Question: 
+	How to adjust for extra bits of security when comparing zk[e]VM proof generation times? If it matters, let's say we are proving 60m gas blocks.
+	
+2025-12-19 22:48:08 From iPhone to Everyone:
+	You mean normalising across different  zkVMs?
+	
+2025-12-19 22:48:13 From reza | 🐜 to Everyone:
+	yes
+	
+2025-12-19 22:48:13 From Ben Diamond to Everyone:
+	interpretation: if different provers are attaining different security levels, how do you compare their proving times?
+	
+2025-12-19 22:52:01 From Ben Diamond to Everyone:
+	What’s wrong with n – f – 1?
+	
+2025-12-19 22:52:15 From George Kadianakis to Everyone:
+	(fwiw: https://github.com/ethereum/soundcalc/ )
+	Sergey Shemyakov | L2BEAT:🔥
+	
+2025-12-19 22:53:43 From Vishal Singh to Everyone:
+	Here is slide if needed - https://docs.google.com/presentation/d/1Khig4hQjw8JcHzPly8sJ5VSureHYPi07vD85mVC0nJg/edit?usp=sharing
+	

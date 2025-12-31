@@ -251,3 +251,9 @@ Ethereumjs, typescript, EF
     - open itents framework
     - there is a solver that perform the complicated logics.
     - it is asynchronous
+
+# Ethereum zkEVM 2026 Plan
+
+- [PR: Add 2026 projects](https://github.com/eth-act/planning/pull/1)
+- [zkEVM on L1](https://hackmd.io/@kevaundray/SkxCvcQMZe)
+- [Execution Layer Rollout Plan](https://hackmd.io/i4z1eOYATKq3Ang-9Zw5hQ)
