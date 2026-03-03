@@ -39,23 +39,23 @@ calldata vs memory:
    - Data: empty or the calldata (function and parameter)
    - v,r,s: components of the transaction signature
 
-When a revert happens, all state changes are undone. Used gases are not refunded, but remaining gas is.
+3. When a revert happens, all state changes are undone. Used gases are not refunded, but remaining gas is.
 
-3. Chainlink offering
+4. Chainlink offering
    - oracle
    - VRF - verifiable random function
    - chainlink automation - when a certain event is emitted, it will call certain function of a smart contract.
    - chainlink function
 
-4. Creating your own library
+5. Creating your own library
    - library couldn't have its own state
    - library functions must be marked internal. If not the library has to be deployed separately on-chain and cannot be embedded in the calling smart contract.
 
-5. SafeMath
+6. SafeMath
    - In solidity v0.8 and above, it adds integer overflow and underflow check. Not before.
    - To have it uncheck, you need an `unchecked {}` block.
 
-6. Sending ETH in three different ways: `transfer`, `send`, `call`
+7. Sending ETH in three different ways: `transfer`, `send`, `call`
    - `transfer`: has a limitation (feature) that can only use up to 2300 gas and it reverts any transaction that exceeds this gas limit.
 
      ```sol
@@ -75,13 +75,13 @@ When a revert happens, all state changes are undone. Used gases are not refunded
      require(success, "Call failed");
      ```
 
-7. For gas optimization
+8. For gas optimization
    - if possible, use `constant` and `immutable`. Avoid of storage read and write.
    - Revert with custom error instead of a error string.
      - error string - each character is a byte. Error will take 32 bytes + 32 bytes + strlen
      - custom error - error with no params are four bytes only.
 
-8. `receive()` and `fallback()` functions
+9. `receive()` and `fallback()` functions
    - for a function to receive ether, it must be marked as `payable`.
    - `fallback()` if no function selector is matched, this function is triggered.
    - `receive()` if ether is sent over, this function is triggered.
