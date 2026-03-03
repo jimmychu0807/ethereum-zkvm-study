@@ -44,7 +44,7 @@ When a revert happens, all state changes are undone. Used gases are not refunded
 3. Chainlink offering
    - oracle
    - VRF - verifiable random function
-  - chainlink automation - when a certain event is emitted, it will call certain function of a smart contract.
+   - chainlink automation - when a certain event is emitted, it will call certain function of a smart contract.
    - chainlink function
 
 4. Creating your own library
