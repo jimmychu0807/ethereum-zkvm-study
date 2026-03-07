@@ -64,5 +64,28 @@ So one “campaign” is:
 
 If a call reverts, the depth counter still increments, and invariants are still checked afterwards (unless fail_on_revert = true, in which case the test fails on the revert itself).
 
+## 6. Upgradeabke Smart Contracts
+
+The proxy pattern
+- proxy contract: contains the contract state/storage
+- implementation contract: contains the biz logics
+
+The proxy contract uses low level `delegatecall()`
+
+Possible issues in proxy pattern
+
+- storage clashes
+  The Golden Rule of Proxy Storage: When upgrading, you can only append new state variables. You must never reorder, remove, or change the type of existing state variables.
+
+- function selector clashes
+
+Common Proxy pattern and solutions
+
+1. Transparent Proxy Pattern: This pattern solves function selector clashes by adding routing logic to the proxy. It inspects the address of the caller (msg.sender). If the caller is the designated admin, the call is handled by the proxy's own logic.
+
+2. UUPS (Universal Upgradeable Proxy standard - EIP-1822): moves the upgrade logic itself out of the proxy and into the implementation contract. This makes the proxy contract smaller, cheaper to deploy, and more universal.
+
+3. Diamond Proxy pattern (EIP-2535): This is a highly advanced, modular pattern. Instead of pointing to a single implementation, a Diamond proxy can delegate calls to multiple implementation contracts, known as "facets." A central mapping within the proxy routes each function selector to its corresponding facet.
+
 # Future Todo
 * should learn the lending protovol well
