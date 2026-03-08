@@ -87,5 +87,12 @@ Common Proxy pattern and solutions
 
 3. Diamond Proxy pattern (EIP-2535): This is a highly advanced, modular pattern. Instead of pointing to a single implementation, a Diamond proxy can delegate calls to multiple implementation contracts, known as "facets." A central mapping within the proxy routes each function selector to its corresponding facet.
 
+### UUPS Contract
+- you need to call `disableInitializers()` in constructors for the proxy. Since you need to wait for the implementation contract to be deployed and then initialize with the impl contract.
+
+### Exercises
+
+EIP-1967: define in the proxy contract which storage slot it stores the implementation contract address.
+
 # Future Todo
 * should learn the lending protovol well
