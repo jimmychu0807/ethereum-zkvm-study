@@ -1,4 +1,4 @@
-# 01 smart contract study guide
+# 01: smart contract study guide
 
 ## EIP-712: Typed structured data hashing and signing
 - https://www.perplexity.ai/search/in-foundry-test-the-std-cheat-xR0gotrRR1.0XXIAJF.DhA#11
@@ -75,7 +75,7 @@ After EIP-155, what get signed are:
 
 **hash(nonce, gasPrice, gasLimit, to, value, data, chainId, 0, 0)**
 
-# 02 Core Solidity
+# 02: Core Solidity
 
 ## `delete` Usage
 
@@ -172,7 +172,7 @@ this is quite tricky,
 - the right-most class with override the function impl of the left class
 - the base class must be on the left and inherited class on the right.
 
-# 03 defi & Apps Concepts
+# 03: defi & Apps Concepts
 
 ## Curve Stableswap Invariant
 
@@ -248,3 +248,11 @@ Implementation‑wise, the protocol accrues this via a per‑collateral rate tha
 ## Timelock Contracts
 
 To enforce a mandatory delay between when a proposal is passed and when its tx can be executed.
+
+# 04: Foundry
+
+- `cast index` to find the storage slot for a mapping
+- Slither / Aderyn - static analysis tool
+- There is a **differential testing** - that test on the different implementation of the same logic
+- there is a `vm.snapshotState()` and `vm.revertToState(snpashotId)`
+- When you want to do dry run on a state-changing function, use `cast call`.

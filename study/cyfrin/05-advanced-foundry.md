@@ -94,5 +94,7 @@ Common Proxy pattern and solutions
 
 EIP-1967: define in the proxy contract which storage slot it stores the implementation contract address.
 
+## 7. Account Abstraction
+
 # Future Todo
 * should learn the lending protovol well
