@@ -128,6 +128,18 @@ real-world bridge application
     - no recursion
     - If inline assembly exists, it will disable spilling
 
+- To use solx, set in `foundry.toml`:
+  ```toml
+  [profile.solx]
+  solc_version = "/your/path/bin/solx"
+  ```
+
+  Then run:
+
+  ```sh
+  FOUNDRY_PROFILE=solx forge build
+  ```
+
 ## 5. Airdrop, Merkle Tree, ECDSA Signature, EIP-4844 blob fee & Tx 4
 
 - the original data is hashed twice to form the leaf nodes in the merkle tree.
