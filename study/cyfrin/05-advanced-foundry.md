@@ -128,8 +128,29 @@ real-world bridge application
     - no recursion
     - If inline assembly exists, it will disable spilling
 
-## 5. Merkle Tree and Airdrop
+## 5. Airdrop, Merkle Tree, ECDSA Signature, EIP-4844 blob fee & Tx 4
 
+- the original data is hashed twice to form the leaf nodes in the merkle tree.
+  - hash twice to make the leaf hash structurally different from an internal node hash. `leaf = H(H(data))`, while internal node is `H( left || right)`.
+  - this could achieve the same result. Separating leaf hash as `H(0x00 || data` and internal node as `H(0x01 || left_hash || right_hash)`
+
+- So your intuition is correct: the Merkle construction assumes there is a canonical, ordered list of recipients somewhere. A claimer’s proof is always derived from that list; the only question is whether they compute it themselves (with the full list) or let a service compute it and rely on public auditability.
+  - either the airdrop program release the full `(address, amount)` list so users' frontend can withdraw this list and compute the proof in frontend.
+  - or the airdrop program has a backend, that once the user connects with it via a wallet, could compute and return the merkle proof to the user who then submit it on-chain.
+
+- **EIP-191** established a foundational standard for formatting signed data in Ethereum, ensuring signed messages are distinct from transactions. Building upon this, **EIP-712** revolutionized how structured data is handled for signing, introducing human-readable formats in wallets and, critically, strong replay protection mechanisms through the domainSeparator and hashStruct concepts.
+
+- The transaction type in Ethereum
+  - ref: https://updraft.cyfrin.io/courses/advanced-foundry/merkle-airdrop/transaction-types
+  - Transaction Type 0 (legacy transaction) - user
+  - Transaction Type 1 (Optional Access list / 0x01 / EIP-2930)
+  - Transaction Type 2 (EIP-1559) - it has revamp on its fee market
+    - has a `baseFee` and `maxPriorityFeePerGas`.
+  - Transaction Type 3 (blob transaction / EIP-4844 / Proto-danksharding) - for blob, defining the blob gas fee.
+
+In zkSync
+  - transaction type 113 (EIP-712 Transaction) - typed structure data hashing and signing for zkSync
+  - transaction type 255 (priority transactions) - enabling the sending transaction directly from L1 to zkSync L2 network. L1 initiate action, and the L2 listen and execute upon it.
 
 ## 6. Upgradeabke Smart Contracts
 
