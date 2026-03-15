@@ -64,6 +64,10 @@ So one “campaign” is:
 
 If a call reverts, the depth counter still increments, and invariants are still checked afterwards (unless fail_on_revert = true, in which case the test fails on the revert itself).
 
+## 4. Cross Chain Rebase Token
+
+- rebase token: token that the balance change overtime. The `balanceOf()` function is actually dynamically computed, with say interest accrued over time.
+
 ## 6. Upgradeabke Smart Contracts
 
 The proxy pattern
@@ -96,5 +100,109 @@ EIP-1967: define in the proxy contract which storage slot it stores the implemen
 
 ## 7. Account Abstraction
 
-# Future Todo
-* should learn the lending protovol well
+zksync and Ethereum are quite different in Account abstraction
+
+For zksync, aa is supported natively onchain. And there are a lot of system level smart contract for zkSync.
+
+For zksync, the transaction txType = 113 (0x71)
+
+There is a bootLoader: this is a system level smart contract that orchestrate valdiation and execution. During valdation, the msg.sender is from this BootLoader smart contract.
+
+There is a NonceHolder contract - managing all account nonce. You need to interact with NonceHolder contract to correctly update the account nonce.
+
+This is the way to increment nonce for zkSync contract
+
+### On validateTransaction
+
+Core responsibility of validateTransaction
+
+1. Nonce Management
+
+    ```sol
+    // Call nonceholder
+    // increment nonce
+    // call(x, y, z) -> system contract call
+    SystemContractsCaller.systemCallWithPropagatedRevert(
+        uint32(gasleft()), // gas limit for the call
+        address(NONCE_HOLDER_SYSTEM_CONTRACT), // Address of the system contract
+        0, // value to send (must be 0 for system calls)
+        abi.encodeCall(INonceHolder.incrementMinNonceIfEquals, (_transaction.nonce)) // Encoded function call data
+    );
+    ```
+2. Fee checking
+
+    ```sol
+    // Check for fee to pay
+    uint256 totalRequiredBalance = _transaction.totalRequiredBalance(); // Uses MemoryTransactionHelper
+    if (totalRequiredBalance > address(this).balance) {
+        revert ZkMinimalAccount__NotEnoughBalance(); // Custom error
+    }
+    ```
+
+3. Signature validation
+
+    ```sol
+    // Check the signature
+    bytes32 txHash = _transaction.encodeHash(); // Get the hash based on tx type (helper)
+
+    // Note: The step MessageHashUtils.toEthSignedMessageHash(txHash) is NOT needed here
+    // for zkSync AA transactions using the standard EIP-712 flow as _transaction.encodeHash()
+    // already produces the EIP-712 compliant hash.
+
+    address signer = ECDSA.recover(txHash, _transaction.signature); // Recover signer directly from txHash
+    bool isValidSigner = signer == owner(); // Check if signer is the contract owner
+    ```
+
+4. At the end, it should return a four bytes magic value
+
+### On executeTransaction
+
+1. retrieve the target address, value, calldata
+2. It may call system contract, such as `DEPLOYER_SYSTEM_CONTRACT` for contract deployments.
+   Otherwise, make normal external call via Yul.
+
+### On fee payment
+
+Within your account contract, two primary functions are designated for handling fee payments:
+- `payForTransaction`: This function is invoked when the account itself is directly paying the transaction fees.
+- `prepareForPaymaster`: This function is called if a paymaster is sponsoring the transaction. It handles the initial interaction and setup required for the paymaster flow.
+
+you need to make payment to the bootloader in `payForTransaction()`.
+
+## 8. DAOs
+
+## 9. Smart Contract Audit
+
+- https://rekt.news/solv-rekt
+- check this hack: https://x.com/DefimonAlerts/status/2029593179863883873
+- https://codehawks.cyfrin.io/c/2026-03-nft-dealers
+
+The audit toolkit:
+- manual review
+- test suites
+- static analysis
+  - [slither](https://github.com/crytic/slither)
+- fuzz testing / stateful fuzz testing
+- formal verification
+
+- time bound yourself
+
+Testing layer
+- layer 1: unit testing (also called dynamic analysis)
+- layer 2: fuzz testing (also called dynamic analysis)
+- layer 3: static analysis (looking at a problem, or using tool like slither)
+- layer 4: formal verification
+  - symbolic execution
+  - abstract interpretation
+  - solidity has a built-in tool for formal verification
+
+To protect yourself, run unknown code in isolated dev environment (docker)
+
+### To further learn more
+- sigma prime blogpost: https://blog.sigmaprime.io/solidity-security.html
+- damn vulnerable defi: https://www.damnvulnerabledefi.xyz/
+- ethernaut
+- solodit: https://solodit.xyz/
+- updraft security & auditing course: https://updraft.cyfrin.io/courses/security
+- rekt.news: https://rekt.news/
+- codehawks platform: https://codehawks.cyfrin.io/
