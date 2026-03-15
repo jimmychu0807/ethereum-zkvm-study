@@ -68,6 +68,69 @@ If a call reverts, the depth counter still increments, and invariants are still 
 
 - rebase token: token that the balance change overtime. The `balanceOf()` function is actually dynamically computed, with say interest accrued over time.
 
+### Bridges
+
+- bridge is mostly on asset transfer
+- There is a broader topic on this, called cross-chain messaging
+- bridge mechanics (4 categories):
+  - burn/lock and mint/unlock (burn on src chain, mint on dest chain) - your bridge need to have permission to burn and mint token
+
+real-world bridge application
+- Transoirter: built on top of chainlink CCIP
+- warmhole portal
+- layerzero
+
+### chainlink CCIP
+
+- Overall architecture
+  ![Chainlink CCIP Architecture](../asset/cyfrin/ccip-architecture.png)
+
+- there is a Commit DON (distributed oracle network - on src chain) that listen to the on-chain activity, and Executing DON (on destination chain)
+
+- There is a Risk Management network (RMN) that monitor CCIP activity for anomalies
+
+### CCT Architecture
+- there is also a cross-chain token standard (CCT).
+
+- chainlink has the CCT standard architecture. The core components are:
+  1. The **Token** contract - the ERC20 token
+  2. The **TokenPool** contract - deployed on the src and destination chain. It control the burn/lock, mint/unlock mechanism.
+  3. The **TokenAdminRegistry** contract - deployed by chainlink on supported chains. A registry mapping token address to the administrators
+  4. **RegistryModuleOwnerCustom** contract - additional hooks, plugin logics for TokenAdminRegistry.
+
+### Circle CCTP
+- USDC also has something called cross-chain transfer protocol, using the burn and mint mechanism. No wrapped tokens around, and have better token liquidity across all chains.
+
+### Solidity: Stack Too Deep error
+- When EVM hits a contract, it has a few spaces
+  - bytecode (deployed bytecode on the address)
+    - pointed to by program counter
+  - calldata (input)
+  - stack (empty)
+  - memory (temporary storage)
+  - storage (persist across txs)
+
+- The EVM stack space
+  - It has 1024 items, but you can only access the top 16 items at any point.
+  - No way to access the 17th one or below, without moving the above items into memory.
+
+- One solution is to use the `via-ir` flag, the diagram describe it:
+  - https://www.soliditylang.org/blog/2024/07/12/a-closer-look-at-via-ir/
+  - It optimizes the code, and do spilling (offloading stack var to memory)
+  - but the optimization might cause changes in storage slot (really??)
+
+- Another solution is using [solx](https://solx.zksync.io/)
+  - pros
+    - it automatically apply spilling if necessary
+    - is designed to optimize code without altering the execution order or logic
+    - shorter compiled bytecode, and more gas efficient
+  - cons
+    - no recursion
+    - If inline assembly exists, it will disable spilling
+
+## 5. Merkle Tree and Airdrop
+
+
 ## 6. Upgradeabke Smart Contracts
 
 The proxy pattern
