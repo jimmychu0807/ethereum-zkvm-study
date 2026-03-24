@@ -256,3 +256,65 @@ To enforce a mandatory delay between when a proposal is passed and when its tx c
 - There is a **differential testing** - that test on the different implementation of the same logic
 - there is a `vm.snapshotState()` and `vm.revertToState(snpashotId)`
 - When you want to do dry run on a state-changing function, use `cast call`.
+
+# Exam skills
+- pacing yourself, split the exam time in 3 pcs
+  - 40m, 26q, 1 - 26
+  - 40m, 26q, 27 - 52
+  - 40m, 26q, 53 - 80
+- Read the ans first, then the question, then the passage
+- have two draft-paper for scratching, and mark down what questions to review at the end.
+- Aim for: 87.5%: 70 questions correct
+
+# Exam Revision - 260324
+- completed quiz 3,4,5,6/25
+
+- The tokenURI in ERC-721 can return the whole metadata string, e.g. `data:application/json;base64,<base64(json)>`
+- string is complex type and cannot be directly compared using `==`.
+- ERC-721, you can only appove a single address to move your ERC token
+- `cast call` - for read only tx, `cast send` - for state changing tx
+- in smart contract level, the low level call:
+  - `staticcall` - for read only tx
+  - `call` - for state-changing tx
+- `abi.encode()` always padded to 32 bytes
+- DAI: algorithmic stability mechanism, is pegged to the US Dollar, and relies on exogenous collateral like ETH?
+- **health factor** = collateral val * liquidationThreshold / total debt. When the health factor < 1, user collateral can be liquidated.
+- fuzz test in [fuzz] section:
+  - configue in foundry.toml, `runs` only
+- invariant testing in [invariant] section:
+  - stateful fuzz testing
+  - it has `runs` and `depth`
+
+## merkle-airdrop
+- completed quiz 14,15,17,
+
+- `0x19` prefix in EIP-191 signed data standard is to prevent the signature to be treated as a transaction.
+
+  The initial 0x19 byte is intended to ensure that the signed_data is not valid RLP.
+
+  For a single byte whose value is in the [0x00, 0x7f] range, that byte is its own RLP encoding.
+
+  And then there is a version byte followed
+
+- EIP-712: typed structured data hashing and signing
+- EIP-1559: restructure on how Ethereum calculate gas fee
+
+## 6. upgradeable smart contract
+completed quizzes: 18, 19
+
+- EIP-1967 - standardize storage slots for proxy contract to specify the implementation address
+
+## 7. acct abstraction
+quiz: 20, 21, 22, 23
+
+- In ZkSync era
+  - there is a **bootloader** system contract
+  - there is also a **NonceHolder** system contract
+
+- The actual gas fee transfer in ERC-4337 AA tx
+  - implementations often lock or pre-deduct a max gas amount from the acct or paymaster deposit inside EntryPoint, but this is validation, not final settlement
+  - happen after the execution() in post-execution() phase. Only after exeuction() can EntryPoint computes the actual gas used.
+  - Entrypoint pay the bundler from the prefunded deposit, and refund the rest.
+
+## 9. security
+quiz: 25
