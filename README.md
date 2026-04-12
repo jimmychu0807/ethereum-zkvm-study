@@ -1,4 +1,4 @@
-# EPF Cohort 6 — Grandine zkVM journal
+# EPF Cohort 6 — zkVM Research and Grandine zkVMs (Pico, Zisk) Integration
 
 This repository is a **learning and progress journal** from [Ethereum Protocol Fellowship (EPF) Cohort 6](https://github.com/eth-protocol-fellows/cohort-six). The technical focus is **proving Ethereum’s consensus-layer beacon state transition (STF)** inside **zkVMs**, using [Grandine](https://github.com/grandinetech/grandine)’s modular `zkvm` host/guest framework. My contribution in that cohort project was integrating **[Brevis Pico](https://github.com/brevis-network/pico)** alongside existing stacks such as RISC Zero and SP1.
 
@@ -6,7 +6,7 @@ If you build or research **clients, consensus specs, or proving systems**, this 
 
 ## What is here vs where the code lives
 
-**In this repo (notes and narrative, not a runnable client):**
+**In this repo (notes and narrative, not actual source code):**
 
 | Area | Purpose |
 |------|---------|
@@ -17,10 +17,13 @@ If you build or research **clients, consensus specs, or proving systems**, this 
 **Upstream implementation (clone these to build or benchmark):**
 
 - Grandine zkVM framework: [github.com/grandinetech/grandine/tree/develop/zkvm](https://github.com/grandinetech/grandine/tree/develop/zkvm)
-- Pico integration and host refactor: [grandinetech/grandine#386](https://github.com/grandinetech/grandine/pull/386)
-- Shared precompiles tuned for zk targets (SHA-256, BLS12-381): [grandinetech/universal-precompiles#3](https://github.com/grandinetech/universal-precompiles/pull/3), [grandinetech/universal-precompiles#4](https://github.com/grandinetech/universal-precompiles/pull/4)
+- Brevis Pico integration and host refactor: [grandinetech/grandine#386](https://github.com/grandinetech/grandine/pull/386)
+- Zisk integration and host refactor: [grandinetech/grandine#475](https://github.com/grandinetech/grandine/pull/475)
+- Shared precompiles tuned for zk targets (SHA-256, BLS12-381): grandinetech/universal-precompiles [PR #3](https://github.com/grandinetech/universal-precompiles/pull/3), [PR #4](https://github.com/grandinetech/universal-precompiles/pull/4), [PR #5](https://github.com/grandinetech/universal-precompiles/pull/5), [PR #6](https://github.com/grandinetech/universal-precompiles/pull/6).
 
-**Cohort project description:** [zkVMs for Beacon Chain Snarkification](https://github.com/eth-protocol-fellows/cohort-six/blob/master/projects/grandine_beacon_zkVMs_snarkification.md) (see also [project ideas](https://github.com/eth-protocol-fellows/cohort-six/blob/master/projects/project-ideas.md)).
+**Cohort project description:**
+
+[zkVMs for Beacon Chain Snarkification](https://github.com/eth-protocol-fellows/cohort-six/blob/master/projects/grandine_beacon_zkVMs_snarkification.md) (see also [project ideas](https://github.com/eth-protocol-fellows/cohort-six/blob/master/projects/project-ideas.md)).
 
 ## Suggested reading order
 
@@ -32,8 +35,6 @@ If you build or research **clients, consensus specs, or proving systems**, this 
 
 - **Fellowship hub:** [github.com/eth-protocol-fellows/cohort-six](https://github.com/eth-protocol-fellows/cohort-six)
 - **Conclusion presentation:** [Google Slides](https://docs.google.com/presentation/d/1a1n-GMzIe9ALcUcrq4O_Tme6zmKSvh-lfnIxbqo7l5o/edit?usp=sharing)
-
-> **Note:** [final-report.md](weekly-update/final-report.md) references figures under `../assets/final-report/`; those image files are not tracked in this clone, so some screenshots may not render locally until paths or assets are aligned.
 
 ## License
 
