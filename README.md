@@ -4,7 +4,7 @@ This repository is a **learning and progress journal** from [Ethereum Protocol F
 
 If you build or research **clients, consensus specs, or proving systems**, this repo ties together **how a real client wires SSZ inputs into a guest program**, which **crypto paths dominate** (SHA-256, BLS12-381), and how teams **CI multiple zkVM backends**—with pointers to the actual Rust changes upstream.
 
-## What is here vs where the code lives
+## What is here vs Where the code lives
 
 **In this repo (notes and narrative, not actual source code):**
 
